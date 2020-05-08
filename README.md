@@ -13,3 +13,4 @@ Este repositório contém os principais resultados deste trabalho de conclusão 
 - Dados Conectados: Diretório contendo o arquivo em formato .ttl com as triplas geradas pela conexão dos dados de mobilidade e educação da cidade de Curitiba.
 - Metodologia: Diretório contendo imagens sobre o fluxo da metodologia seguida por este trabalho de conclusão de curso.
 - Ontologia: Diretório contendo a ontologia desenvolvida neste trabalho para a integração dos dados de mobilidade e educação. Além de conter também as ontologias que foram reutilizadas: CRISP, ENVO e GeoNames.
+- Arquivos Python: Diretório contendo os códigos de tratamentos, na linguagem Python, dos dados abertos.
