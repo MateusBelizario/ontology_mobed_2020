@@ -1,0 +1,457 @@
+@prefix : <http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#> .
+@prefix csp: <http://purl.bioontology.org/ontology/CSP/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix envo: <http://purl.obolibrary.org/obo/envo.owl#> .
+@prefix obda: <https://w3id.org/obda/vocabulary#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ontology: <https://www.geonames.org/ontology#> .
+@base <http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education> .
+
+<http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education> rdf:type owl:Ontology ;
+                                                                            owl:imports csp: ,
+                                                                                        <http://purl.obolibrary.org/obo/envo.owl> ,
+                                                                                        <https://www.geonames.org/ontology> ;
+                                                                            rdfs:comment """\"LINKED OPEN DATA EM CIDADES INTELIGENTES:MOBILIDADE E EDUCAÇÃO EM CURITIBA\"
+
+Aluno: Mateus Guimarães Belizario
+Orientadora: Rita C. G. Berardi
+
+O problema geral que este trabalho se propõe a tratar está presente na seguinte pergunta: \"Como pode-se interpretar, relacionar e estruturar os dados gerados pelo espaço urbano, levando em consideração suas particularidade e valores semânticos, permitindo que eles sejam utilizados por gestores e especialistas para tomadas de decisão?\". 
+
+Pretende-se enfrentar os problemas de gerenciamento de dados nas cidades apresentados anteriormente. Dentre os problemas, encontram-se a falta de homogenização de formato dos dados e seus valores semânticos, a falta da relação existente entre os dados dos diferente domínios das cidades inteligentes e as formas para interpretar essas relações de forma a compreender a situação do ambiente do qual foram originados.
+
+Para isso, o objeto de estudo selecionado se refere aos dados gerados pela cidade de Curitiba, no estado de Paraná no Brasil. De forma específica, foram selecionados dois domínios da cidade para se trabalhar: Educação e Mobilidade. Esses domínios foram selecionados pois demonstram a dificuldade de gestão, heterogeneidade e integração dos dados dispostos pelas bases de dados abertas da cidade. E a integração deles podem permitir novas visões e desdobramentos sobre a situação da educação, em diferentes níveis, e da mobilidade na cidade de Curitiba.
+
+Este trabalho propõe a construção de um modelo ontológico de dados para interpretar como as diferentes áreas e domínios do espaço urbano, especificamente mobilidade e educação, são capazes de impactar uns aos outros abrangendo conceitos e soluções Linked Open Data. Este modelo deve ser capaz de lidar com dados de diferentes domínios, em diferentes formatos e de diferentes origens. Além de fornecer informações de forma integrada de modo a auxiliar na gestão desses domínios.
+
+Universidade Tecnológica Federal do Paraná | 2019"""@pt .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasAddress
+:hasAddress rdf:type owl:ObjectProperty ;
+            owl:inverseOf :isAddressOf ;
+            rdfs:domain :City ;
+            rdfs:range :Address ;
+            rdfs:comment "a relation between a city and a address, in which the city contains a address."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasBus
+:hasBus rdf:type owl:ObjectProperty ;
+        owl:inverseOf :passBy ;
+        rdfs:domain :Bus_Station ;
+        rdfs:range <http://purl.obolibrary.org/obo/ENVO_01000611> ,
+                   :Bus ;
+        rdfs:comment "a relation between a bus station and a bus, in which the bus station contains a bus."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasStatistics
+:hasStatistics rdf:type owl:ObjectProperty ;
+               rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                           :School ;
+               rdfs:range :Educational_Statistics ;
+               rdfs:comment "a relation between a school and educational statistics, in which the school has some educational statistics."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasStop
+:hasStop rdf:type owl:ObjectProperty ;
+         owl:inverseOf :isStopOf ;
+         rdfs:domain <http://purl.obolibrary.org/obo/ENVO_01000611> ,
+                     :Bus ;
+         rdfs:range :Bus_Stop ;
+         rdfs:comment "a relation between a bus and a bus stop, in which the bus stop is a stop of the bus."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isAddressOf
+:isAddressOf rdf:type owl:ObjectProperty ;
+             rdfs:domain :Address ;
+             rdfs:range :City ;
+             rdfs:comment "a relation between an address station and a city, in which the address is present in a city."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isLocated
+:isLocated rdf:type owl:ObjectProperty ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( <http://purl.bioontology.org/ontology/CSP/0988-3821>
+                                       :Access_Point
+                                       :Address
+                                       :Educational_Institution
+                                     )
+                       ] ;
+           rdfs:range :Address ;
+           rdfs:comment "a relation between a access point or a adress or an education institution or a school and address, those things are located is some address."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isNearAccessPoint
+:isNearAccessPoint rdf:type owl:ObjectProperty ;
+                   rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                               :Educational_Institution ;
+                   rdfs:range :Access_Point ;
+                   rdfs:comment "a relation between a education institution and a access point, in which the education institutional is near some access point."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isStopOf
+:isStopOf rdf:type owl:ObjectProperty ;
+          rdfs:domain :Bus_Stop ;
+          rdfs:range <http://purl.obolibrary.org/obo/ENVO_01000611> ,
+                     :Bus ;
+          rdfs:comment "a relation between a bus stop  and a bus, in which the bus stop is one of the stops of a bus route."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isTakenBy
+:isTakenBy rdf:type owl:ObjectProperty ;
+           owl:inverseOf :takesExam ;
+           rdfs:domain :Exam ;
+           rdfs:range <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                      :Educational_Institution ;
+           rdfs:comment "a relation between an exam and a educational institutional, in  which the exam is taken by some educational institution."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#passBy
+:passBy rdf:type owl:ObjectProperty ;
+        rdfs:domain <http://purl.obolibrary.org/obo/ENVO_01000611> ,
+                    :Bus ;
+        rdfs:range :Bus_Station ;
+        rdfs:comment "a relation between a bus and a bus station, in which bus pass by some bus station."@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#takesExam
+:takesExam rdf:type owl:ObjectProperty ;
+           rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                       :Educational_Institution ;
+           rdfs:range :Exam ;
+           rdfs:comment "a relation between a school and education institution, in which the school takes some educational exam."@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#essayAverage
+:essayAverage rdf:type owl:DatatypeProperty ;
+              rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasAbandonmentRate
+:hasAbandonmentRate rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Educational_Statistics .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasAdvancedPercentual
+:hasAdvancedPercentual rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasAppropriatePercentual
+:hasAppropriatePercentual rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasApprovalRate
+:hasApprovalRate rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Educational_Statistics .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasBasicPercentual
+:hasBasicPercentual rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasCode
+:hasCode rdf:type owl:DatatypeProperty ;
+         rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                     :Access_Point ,
+                     :Bus ,
+                     :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasCodeIES
+:hasCodeIES rdf:type owl:DatatypeProperty ;
+            rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                        :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasCountry
+:hasCountry rdf:type owl:DatatypeProperty ;
+            rdfs:domain :City .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasDegree
+:hasDegree rdf:type owl:DatatypeProperty ;
+           rdfs:domain :National_Student_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasDisapprovalRate
+:hasDisapprovalRate rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Educational_Statistics .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasGeneralGrade
+:hasGeneralGrade rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :National_Student_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasINEPCode
+:hasINEPCode rdf:type owl:DatatypeProperty ;
+             rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                         :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasINSE
+:hasINSE rdf:type owl:DatatypeProperty ;
+         rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                     :Educational_Statistics ,
+                     :Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasInitials
+:hasInitials rdf:type owl:DatatypeProperty ;
+             rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                         :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasInsufficientPercentual
+:hasInsufficientPercentual rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasName
+:hasName rdf:type owl:DatatypeProperty ;
+         rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                     <http://purl.obolibrary.org/obo/ENVO_01000611> ,
+                     :Bus ,
+                     :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasNeighborhood
+:hasNeighborhood rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Address .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasNeighborhoodCode
+:hasNeighborhoodCode rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :Address .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasParticipationRate
+:hasParticipationRate rdf:type owl:DatatypeProperty ;
+                      rdfs:domain :Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasPermanenceRate
+:hasPermanenceRate rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Educational_Statistics .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasProeficientPercentual
+:hasProeficientPercentual rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasState
+:hasState rdf:type owl:DatatypeProperty ;
+          rdfs:domain :City .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasType
+:hasType rdf:type owl:DatatypeProperty ;
+         rdfs:domain <http://purl.bioontology.org/ontology/CSP/0988-3821> ,
+                     :Educational_Institution .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#hasYear
+:hasYear rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Educational_Statistics ,
+                     :Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#humanSciencesAverage
+:humanSciencesAverage rdf:type owl:DatatypeProperty ;
+                      rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isExamGrade
+:isExamGrade rdf:type owl:DatatypeProperty ;
+             rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#isExamSubject
+:isExamSubject rdf:type owl:DatatypeProperty ;
+               rdfs:domain :National_School_Performance_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#mathAverage
+:mathAverage rdf:type owl:DatatypeProperty ;
+             rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#naturalSciencesAverage
+:naturalSciencesAverage rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#objectiveAverage
+:objectiveAverage rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#portugueseAverage
+:portugueseAverage rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :National_High_School_Exam .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#totalAverage
+:totalAverage rdf:type owl:DatatypeProperty ;
+              rdfs:domain :National_High_School_Exam .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Access_Point
+:Access_Point rdf:type owl:Class ;
+              <http://purl.obolibrary.org/obo/IAO_0000115> "Passage that allows the use of public transport."@en ;
+              rdfs:label "Access Point"@en ,
+                         "Ponto de Acesso"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Address
+:Address rdf:type owl:Class ;
+         owl:equivalentClass [ rdf:type owl:Restriction ;
+                               owl:onProperty :isLocated ;
+                               owl:someValuesFrom :City
+                             ] ;
+         <http://purl.obolibrary.org/obo/IAO_0000115> "Gathering the necessary data to be able to locate a property (street name, house number, apartment, floor, land, etc.)"@en ;
+         rdfs:label "Address"@en ,
+                    "Endereço"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Bus
+:Bus rdf:type owl:Class ;
+     owl:equivalentClass [ rdf:type owl:Restriction ;
+                           owl:onProperty :passBy ;
+                           owl:someValuesFrom :Bus_Station
+                         ] ;
+     <http://purl.obolibrary.org/obo/IAO_0000115> "Any vehicle that performs the function of carrying passengers."@en ;
+     rdfs:label "Bus"@en ,
+                "Ônibus"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Bus_Station
+:Bus_Station rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Restriction ;
+                                   owl:onProperty :hasBus ;
+                                   owl:someValuesFrom :Bus
+                                 ] ;
+             rdfs:subClassOf :Access_Point ;
+             <http://purl.obolibrary.org/obo/IAO_0000115> "Structures where urban buses stop for passengers to board and/or disembark."@en ;
+             rdfs:label "Bus Station"@en ,
+                        "Terminal de Ônibus"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Bus_Stop
+:Bus_Stop rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty :isStopOf ;
+                                owl:someValuesFrom :Bus
+                              ] ;
+          rdfs:subClassOf :Access_Point ;
+          <http://purl.obolibrary.org/obo/IAO_0000115> "Stop of a bus on a certain route."@en ;
+          rdfs:label "Bus Stop"@en ,
+                     "Ponto de Ônibus"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#City
+:City rdf:type owl:Class ;
+      <http://purl.obolibrary.org/obo/IAO_0000115> "Conglomerate of people who, located in a geographically delimited area, have many houses, industries, agricultural areas."@en ;
+      rdfs:label "Cidade"@pt ,
+                 "City"@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Educational_Institution
+:Educational_Institution rdf:type owl:Class ;
+                         <http://purl.obolibrary.org/obo/IAO_0000115> "Establishment intended for teaching, public or private."@en ;
+                         rdfs:label "Educational Institution"@en ,
+                                    "Instituição de Educação"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Educational_Statistics
+:Educational_Statistics rdf:type owl:Class ;
+                        <http://purl.obolibrary.org/obo/IAO_0000115> "The numerical facts and data about education."@en ;
+                        rdfs:label "Educational Statistics"@en ,
+                                   "Estatísticas Educacionais"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#Exam
+:Exam rdf:type owl:Class ;
+      owl:equivalentClass [ rdf:type owl:Restriction ;
+                            owl:onProperty :isTakenBy ;
+                            owl:someValuesFrom :Educational_Institution
+                          ] ;
+      <http://purl.obolibrary.org/obo/IAO_0000115> "Evaluation of  the characteristics or qualities of something or someone."@en ;
+      rdfs:label "Exam"@en ,
+                 "Exame"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#National_High_School_Exam
+:National_High_School_Exam rdf:type owl:Class ;
+                           rdfs:subClassOf :Exam ;
+                           <http://purl.obolibrary.org/obo/IAO_0000115> "Written test, applied annually to assess the quality of secondary education in Brazil. Its result serves to access higher education in Brazilian public universities."@en ;
+                           rdfs:label "ENEM"@pt ,
+                                      "National High School Exam"@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#National_School_Performance_Exam
+:National_School_Performance_Exam rdf:type owl:Class ;
+                                  rdfs:subClassOf :Exam ;
+                                  <http://purl.obolibrary.org/obo/IAO_0000115> "It is one of the components for calculating the Basic Education Development Index in Brazil. It is held every two years and all students from 5th and 9th urban public schools participate."@en ;
+                                  rdfs:label "National School Performance"@en ,
+                                             "Prova Brasil"@pt .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#National_Student_Performance_Exam
+:National_Student_Performance_Exam rdf:type owl:Class ;
+                                   rdfs:subClassOf :Exam ;
+                                   <http://purl.obolibrary.org/obo/IAO_0000115> "Written test, applied annually, used to evaluate Brazilian higher education degrees."@en ;
+                                   rdfs:label "ENADE"@pt ,
+                                              "National Student Performance Exam"@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#School
+:School rdf:type owl:Class ;
+        owl:equivalentClass [ rdf:type owl:Class ;
+                              owl:unionOf ( [ rdf:type owl:Restriction ;
+                                              owl:onProperty :takesExam ;
+                                              owl:someValuesFrom :National_High_School_Exam
+                                            ]
+                                            [ rdf:type owl:Restriction ;
+                                              owl:onProperty :takesExam ;
+                                              owl:someValuesFrom :National_School_Performance_Exam
+                                            ]
+                                          )
+                            ] ;
+        rdfs:subClassOf :Educational_Institution ;
+        <http://purl.obolibrary.org/obo/IAO_0000115> "Educational institution aimed at basic education, elementary and high school."@en ;
+        rdfs:label "Escola"@pt ,
+                   "School"@en .
+
+
+###  http://www.semanticweb.org/mateus/ontologies/2019/9/mobility_&_education#University
+:University rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty :takesExam ;
+                                  owl:someValuesFrom :National_Student_Performance_Exam
+                                ] ;
+            rdfs:subClassOf :Educational_Institution ;
+            <http://purl.obolibrary.org/obo/IAO_0000115> "Educational institution that covers several schools of higher education, postgraduate, master's, doctorate etc."@en ;
+            rdfs:label "Universidade"@pt ,
+                       "University"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
